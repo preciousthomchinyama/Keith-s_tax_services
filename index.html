@@ -22,7 +22,7 @@ body {
     align-items: center;
     background: #111;
     color: white;
-    padding: 15px;
+    padding: 12px 20px;
 }
 
 .menu-toggle {
@@ -59,6 +59,13 @@ body {
     inset: 0;
     background: rgba(0,0,0,0.45);
     z-index: 1;
+}
+
+.top-nav .nav-logo {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap; /* prevents wrapping */
 }
 
 .nav-logo {
@@ -374,17 +381,31 @@ button {
     border-radius: 5px;
 }
 
+.menu-toggle {
+    font-size: 26px;
+    cursor: pointer;
+    margin-left: auto; /* pushes it to the far right */
+}
+
 /* MOBILE */
 @media (max-width: 768px) {
     body { flex-direction: column; }
 
-    .top-nav { display: flex; }
+    .top-nav { 
+        display: flex;
+     }
 
     .nav-bar {
         position: relative;
         width: 100%;
         display: none;
         height: auto;
+    }
+    .nav-bar .nav-logo {
+    display: none;
+    }
+    .nav-logo{
+        font-size:20px ;
     }
 
     .nav-bar.active { display: block; }
