@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keith's Taxi Service</title>
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+
+/* ===== TOP NAV ===== */
+.top-nav {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    color: white;
+    padding: 15px;
+}
+
+.menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ===== SIDEBAR ===== */
+.nav-bar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background: #111;
+}
+
+#sidebar-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 2s ease-in-out;
+    z-index: 0;
+}
+
+#sidebar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+}
+
+.nav-logo {
+    position: relative;
+    z-index: 2;
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffcc00;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 80px;
+}
+
+.nav-logo::after {
+    content: "";
+    display: block;
+    width: 40%;
+    height: 3px;
+    background: #ffcc00;
+    margin-top: 5px;
+    border-radius: 2px;
+}
+
+#sidebar-ads {
+    position: relative;
+    z-index: 2;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 60px;
+    text-align: center;
+    color: #ffcc00;
+    word-wrap: break-word;
+    line-height: 1.3;
+}
+
+.nav-bar a {
+    position: relative;
+    z-index: 2;
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 25px 0;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-bar a:hover {
+    color: #ffcc00;
+}
+
+/* ===== MAIN ===== */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: -3px 0 6px rgba(0,0,0,0.1);
+}
+
+/* ===== HERO ===== */
+.hero {
+    position: relative;
+    height: 250px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('./images/kts-7.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    filter: brightness(0.6); /* dark overlay effect */
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+    color: white;
+}
+
+.book-btn, .whatsapp-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.book-btn {
+    background: #ffcc00;
+    color: black;
+    margin-right: 10px;
+}
+
+.book-btn:hover {
+    background: #ffaa00;
+    transform: scale(1.05);
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: white;
+    margin-top: 10px;
+}
+
+.whatsapp-btn:hover {
+    background: #1ebe57;
+    transform: scale(1.05);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+    margin-bottom: 40px;
+}
+
+h3 {
+    margin-bottom: 10px;
+    color: #111;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background: #ffcc00;
+    margin-bottom: 20px;
+}
+
+/* ABOUT */
+.about-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.about-container img {
+    width: 250px;
+    border-radius: 10px;
+}
+
+.about-text {
+    flex: 1;
+}
+
+/* OUR GOAL & MISSION */
+.goal-mission-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.goal-mission-card {
+    flex: 1 1 45%;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.goal-mission-card h4 {
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.goal-mission-card p {
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ===== SERVICES ===== */
+.services-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.service-card {
+    flex: 1 1 30%;
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.service-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.service-card h4,
+.service-card p {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0.9;
+}
+
+.service-card:hover h4,
+.service-card:hover p {
+    transform: translateY(-10px);
+    opacity: 1;
+}
+
+.service-card h4 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.service-card p {
+    line-height: 1.6;
+}
+
+/* ===== SLIDESHOW ===== */
+.slideshow {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.slide-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    color: white;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    border-radius: 0 0 10px 10px;
+}
+
+.customer {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.stars {
+    color: #ffcc00;
+    margin-bottom: 5px;
+}
+
+/* NAV BUTTONS */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* FORM */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+
+    .top-nav { display: flex; }
+
+    .nav-bar {
+        position: relative;
+        width: 100%;
+        display: none;
+        height: auto;
+    }
+
+    .nav-bar.active { display: block; }
+
+    .main-content { margin-left: 0; }
+
+    /* Hero adjustments */
+    .hero { height: 350px; } /* increase hero height on mobile */
+
+    .about-container { flex-direction: column; text-align: center; }
+    .about-container img { width: 100%; }
+
+    .services-container { flex-direction: column; }
+    .service-card { flex: 1 1 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top-nav">
+    <div class="nav-logo">Keith's Taxi Service</div>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+</header>
+
+<nav class="nav-bar" id="nav-bar">
+    <div class="nav-logo">Keith's Taxi Service</div>
+    <div id="sidebar-bg"></div>
+    <div id="sidebar-overlay"></div>
+    <div id="sidebar-ads"></div>
+
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#goal-mission">Our Goal & Mission</a>
+    <a href="#services">Services</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<section class="main-content">
+
+<!-- HERO -->
+<div id="home" class="hero">
+    <div class="hero-content">
+        <h2>Fast & Reliable Taxi Service</h2>
+        <p>Travel anywhere in Malawi with comfort</p>
+        <button class="book-btn" onclick="scrollToContact()">Book Now</button>
+        <button class="whatsapp-btn" onclick="bookWhatsApp()">Book via WhatsApp</button>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+    <h3>Why Choose Me</h3>
+    <hr>
+    <div class="about-container">
+        <img src="./images/kts-15.jpeg" alt="Keith's Taxi">
+        <div class="about-text">
+            <h4>Your Trusted Local Driver</h4>
+            <p>My name is Keith, a dedicated and professional taxi driver based in Blantyre, Malawi. I provide safe, reliable, and comfortable transport with local guidance and tips for exploring Malawi.</p>
+        </div>
+    </div>
+</div>
+
+<!-- OUR GOAL & MISSION -->
+<div id="goal-mission" class="section">
+    <h3>Our Goal & Mission</h3>
+    <hr>
+    <div class="goal-mission-container">
+        <div class="goal-mission-card">
+            <h4>Our Goal</h4>
+            <p>To provide safe, reliable, and comfortable taxi services across Malawi, while offering personalized guidance and unforgettable travel experiences.</p>
+        </div>
+        <div class="goal-mission-card">
+            <h4>Our Mission</h4>
+            <p>To build trust with every customer through professionalism, integrity, and exceptional service, making every journey more than just transportation.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SERVICES -->
+<div id="services" class="section">
+    <h3>Our Services</h3>
+    <hr>
+    <div class="services-container">
+        <div class="service-card" style="background-image: url('./images/kts-20.jpg');">
+            <div class="service-overlay"></div>
+            <h4>Airport Transfers</h4>
+            <p>Reliable pick-up and drop-off to any airport in Malawi.</p>
+        </div>
+        <div class="service-card" style="background-image: url('./images/kts-17.jpg');">
+            <div class="service-overlay"></div>
+            <h4>City Tours</h4>
+            <p>Explore the city comfortably with guided tours tailored for you.</p>
+        </div>
+        <div class="service-card" style="background-image: url('./images/kts-18.jpg');">
+            <div class="service-overlay"></div>
+            <h4>Adventure Trips</h4>
+            <p>Travel to Malawi’s top attractions and hidden gems with ease.</p>
+        </div>
+    </div>
+</div>
+
+<!-- REVIEWS -->
+<div id="reviews" class="section">
+    <h3>Customer Reviews & Proof</h3>
+    <hr>
+    <div class="slideshow" id="slideshow">
+        <div class="slide active">
+            <img src="./images/kts-2.jpeg">
+            <div class="slide-text">
+                <div class="stars">★★★★★</div>
+                "Very professional and friendly driver."
+                <div class="customer">— Sarah M.</div>
+            </div>
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">❮</button>
+        <button class="next" onclick="changeSlide(1)">❯</button>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section">
+    <h3>Contact Us</h3>
+    <hr>
+    <form id="bookingForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="text" placeholder="Phone Number" required>
+        <textarea placeholder="Message"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="responseMsg"></p>
+</div>
+
+</section>
+
+<script>
+// MENU TOGGLE
+document.getElementById("menu-toggle").onclick = () => {
+    document.getElementById("nav-bar").classList.toggle("active");
+};
+
+// SCROLL TO CONTACT
+function scrollToContact(){
+    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+}
+
+// SLIDESHOW
+let index = 0;
+let slides = document.querySelectorAll(".slide");
+function showSlide(i){
+    slides.forEach(s => s.classList.remove("active"));
+    slides[i].classList.add("active");
+}
+function changeSlide(n){
+    index += n;
+    if(index >= slides.length) index = 0;
+    if(index < 0) index = slides.length - 1;
+    showSlide(index);
+}
+setInterval(() => changeSlide(1), 4000);
+
+// FORM
+document.getElementById("bookingForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("responseMsg").innerText = "Booking sent!";
+    this.reset();
+});
+
+// SIDEBAR ADS
+const ads = ["Adventure", "Tour", "More than just an experience"];
+let adIndex = 0;
+const adElem = document.getElementById("sidebar-ads");
+function changeAd() {
+    adElem.textContent = ads[adIndex];
+    adIndex = (adIndex + 1) % ads.length;
+}
+changeAd();
+setInterval(changeAd, 3000);
+
+// SIDEBAR BACKGROUND FADE
+const sidebarBg = document.getElementById("sidebar-bg");
+const bgImages = [
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
+    'https://images.unsplash.com/photo-1493558103817-58b2924bce98',
+    'https://images.unsplash.com/photo-1483721310020-03333e577078',
+    'https://images.unsplash.com/photo-1549887534-7b73c78f6fd7'
+];
+let bgIndex = 0;
+sidebarBg.style.backgroundImage = `url(${bgImages[bgIndex]})`;
+sidebarBg.style.opacity = 1;
+
+function changeSidebarBg() {
+    sidebarBg.style.opacity = 0;
+    setTimeout(() => {
+        bgIndex = (bgIndex + 1) % bgImages.length;
+        sidebarBg.style.backgroundImage = `url(${bgImages[bgIndex]})`;
+        sidebarBg.style.opacity = 1;
+    }, 2000);
+}
+setInterval(changeSidebarBg, 6000);
+
+// BOOK VIA WHATSAPP
+function bookWhatsApp(){
+    const phone = "265880025992"; // replace with your WhatsApp number
+    const message = encodeURIComponent("Hello Keith, I want to book a taxi.");
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+}
+</script>
+
+</body>
+</html>
