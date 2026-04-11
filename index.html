@@ -252,6 +252,10 @@ hr {
     margin-bottom: 20px;
 }
 
+#contact {
+    text-align: center;
+}
+
 /* ABOUT */
 .about-container {
     display: flex;
@@ -358,11 +362,13 @@ hr {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+    height: 559px;
 }
 
 .slide {
     position: absolute;
     width: 100%;
+    height: 100%;
     opacity: 0;
     transition: opacity 0.6s ease-in-out;
 }
@@ -374,6 +380,9 @@ hr {
 
 .slide img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
     border-radius: 10px;
 }
 
@@ -469,6 +478,7 @@ button {
 
     .services-container { flex-direction: column; }
     .service-card { flex: 1 1 100%; }
+    .slideshow { height: 300px; }
 
      .hero-content h1 {
         font-size: 26px;
@@ -526,13 +536,8 @@ button {
     <div class="hero-content">
         <h1>Keith's Taxi Service</h1>
         <h2>Your Trusted Travel Partner in Malawi</h2>
-        <p>
-            Experience safe, reliable, and comfortable transportation across Malawi.
-            Whether it's airport transfers, city rides, or adventure trips — we’ve got you covered.
-        </p>
 
         <div class="hero-buttons">
-            <button class="book-btn" onclick="scrollToContact()">Book Now</button>
             <button class="whatsapp-btn" onclick="bookWhatsApp()">Book via WhatsApp</button>
         </div>
     </div>
@@ -599,35 +604,7 @@ button {
             <img src="./images/kts-2.jpeg">
             <div class="slide-text">
                 <div class="stars">★★★★★</div>
-                "Very professional and friendly driver."
-                <div class="customer">— Sarah M.</div>
-            </div>
-        </div>
-
-        <div class="slide active">
-            <img src="./images/kts-5.jpeg">
-            <div class="slide-text">
-                <div class="stars">★★★★★</div>
-                "Very professional and friendly driver."
-                <div class="customer">— Jane</div>
-            </div>
-        </div>
-
-        <div class="slide active">
-            <img src="./images/kts-11.jpeg">
-            <div class="slide-text">
-                <div class="stars">★★★★★</div>
-                "Very professional and friendly driver."
-                <div class="customer">— Cathy.</div>
-            </div>
-
-        </div>
-
-        <div class="slide active">
-            <img src="./images/kts-12.jpeg">
-            <div class="slide-text">
-                <div class="stars">★★★★★</div>
-                "Very professional and friendly driver."
+                "Safe ride, clean car, and excellent time keeping."
                 <div class="customer">— Sarah M.</div>
             </div>
         </div>
@@ -636,16 +613,7 @@ button {
             <img src="./images/kts-8.jpeg">
             <div class="slide-text">
                 <div class="stars">★★★★★</div>
-                "Very professional and friendly driver."
-                <div class="customer">— Sarah M.</div>
-            </div>
-        </div>
-
-        <div class="slide active">
-            <img src="./images/kts-5.jpeg">
-            <div class="slide-text">
-                <div class="stars">★★★★★</div>
-                "Very professional and friendly driver."
+                "I felt welcomed from the first call to the final drop-off."
                 <div class="customer">— Sarah M.</div>
             </div>
         </div>
@@ -659,13 +627,20 @@ button {
 <div id="contact" class="section">
     <h3>Contact Us</h3>
     <hr>
-    <form id="bookingForm">
-        <input type="text" placeholder="Your Name" required>
-        <input type="text" placeholder="Phone Number" required>
-        <textarea placeholder="Message"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-    <p id="responseMsg"></p>
+    <div style="margin-top: 50px;">
+        <p>Blantyre, Malawi</p>
+        <p style="color: red;">keithtaxiblantyre@gmail.com</p>
+        <p style="color: red;">+265 99 21 12 600</p>
+        <p style="color: red;">+088 53 45 977</p>
+        <p>Keith's taxi service is available 24 hours a day, 7 days a week.</p>
+        <p>Please do not hessitate to get in contact! You can call or send me a message via Whatsapp or Telegram at any time.</p>
+    </div>
+    <div style="margin-top: 50px;">
+        <p>Copyright © 2026 Keith's Taxi Service - All rights reserved</p>
+        <p>Privacy Policy</p>
+    </div>
+    
+    
 </div>
 
 </section>
@@ -695,13 +670,6 @@ function changeSlide(n){
     showSlide(index);
 }
 setInterval(() => changeSlide(1), 4000);
-
-// FORM
-document.getElementById("bookingForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    document.getElementById("responseMsg").innerText = "Booking sent!";
-    this.reset();
-});
 
 // SIDEBAR ADS
 const ads = [
